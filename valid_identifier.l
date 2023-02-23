@@ -5,6 +5,7 @@ int c=0;
 
 %%
 [a-zA-Z_][a-zA-Z0-9_]* {c++; printf("\tvalid identifier=%s",yytext);}
+[0-9_][a-zA-Z0-9_]* {c++; printf("\tinvalid identifier=%s",yytext);}
 .;     
 
 %%
