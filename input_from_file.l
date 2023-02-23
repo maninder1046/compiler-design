@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 extern FILE*yyin;
 
-yyin = fopen(argv[1],"r");
+yyin = fopen("input.txt","r");
 yylex();
 
 printf(" Lines : %d Words : %d Spaces : %d Total : %d", lines, words, spaces, total);
