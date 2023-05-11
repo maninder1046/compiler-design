@@ -1,0 +1,81 @@
+Program 14: Yacc-Lex code for converting infix expression to postfix 
+
+expression. 
+
+itp.l 
+
+%{ 
+
+#include"y.tab.h" 
+
+extern int yylval; 
+
+%} 
+
+%% 
+
+[0-9]+ {yylval=atoi(yytext); return NUM;} 
+
+\n return 0; 
+
+. return *yytext; 
+
+%% 
+
+int yywrap(){ 
+
+ return 1; 
+
+} 
+
+itp.y 
+
+%{ 
+
+#include<stdio.h> 
+
+%} 
+
+%token NUM 
+
+%left '+' '-' 
+
+%left '*' '/' 
+
+%right NEGATIVE 
+
+%% 
+
+S: E {printf("\n");} 
+
+ ; 
+
+E: E '+' E {printf("+");} 
+
+ | E '*' E {printf("*");} 
+
+ | E '-' E {printf("-");} 
+
+ | E '/' E {printf("/");} 
+
+ | '(' E ')' 
+
+ | '-' E %prec NEGATIVE {printf("-");} 
+
+ | NUM {printf("%d", yylval);} 
+
+ ; 
+
+%% 
+
+int main(){ 
+
+ yyparse(); 
+
+} 
+
+int yyerror (char *msg) { 
+
+ return printf ("error YACC: %s\n", msg); 
+
+} 
